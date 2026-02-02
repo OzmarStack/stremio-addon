@@ -17,7 +17,7 @@ const manifest = {
     logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
     // ... resto del código
     // ESTA ES LA IMAGEN QUE APARECERÁ EN STREMIO
-    logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
+   logo: "https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png",
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -126,4 +126,5 @@ app.get('/stream/:type/:id.json', (req, res) => {
 
 const port = process.env.PORT || 10000;
 app.listen(port, () => console.log(`🚀 Addon listo en puerto ${port}`));
+
 
