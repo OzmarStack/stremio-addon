@@ -6,15 +6,16 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 
-app.use(cors()); // Soluciona el error 'Failed to fetch'
-app.use(express.static(__dirname)); // Permite cargar tus imágenes locales
+app.use(cors()); 
+app.use(express.static(__dirname)); 
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
     version: "1.3.2",
     name: "Nami Nyaa Streams",
-    description: "Anime directo de Nyaa.si - El tesoro de Ozmar",
-    logo: "https://i.postimg.cc/85yX8v8j/nami-logo.png",
+    description: "Anime directo de Nyaa.si - El tesoro de OzmarStack",
+    // ESTA ES LA IMAGEN QUE APARECERÁ EN STREMIO
+    logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -109,11 +110,11 @@ app.get('/:config?/manifest.json', (req, res) => {
 });
 
 app.get('/:config/stream/:type/:id.json', (req, res) => {
-    const config = req.params.config.split(',').reduce((acc, curr) => {
+    const config = req.params.config ? req.params.config.split(',').reduce((acc, curr) => {
         const [k, v] = curr.split('=');
         acc[k] = v;
         return acc;
-    }, {});
+    }, {}) : {};
     addonInterface.handlers.stream({ type: req.params.type, id: req.params.id, config }).then(r => res.json(r));
 });
 
@@ -122,4 +123,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 });
 
 const port = process.env.PORT || 10000;
-app.listen(port, () => console.log(`🚀 OzmarStack listo en puerto ${port}`));
+app.listen(port, () => console.log(`🚀 Addon listo en puerto ${port}`));
