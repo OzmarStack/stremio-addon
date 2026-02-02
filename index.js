@@ -2,25 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const { si, sukebei } = require('nyaapi');
 const axios = require('axios');
-const fs = require('fs');
 const path = require('path');
 const app = express();
 
 app.use(cors());
 
-// Master Of Reality: Forzamos que todo lo que salga de aquí sea JSON por defecto para Stremio
-app.use((req, res, next) => {
-    if (req.url.endsWith('.json') || req.url.includes('/stream/')) {
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    }
-    next();
-});
-
 const orangeLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC";
 
 const manifest = {
-    id: "com.masterofreality.nyaa.ultra.v11", 
-    version: "1.5.6",
+    id: "com.masterofreality.nyaa.ultimate.v12", 
+    version: "1.5.7",
     name: "Nyaa Torrents 🍊",
     description: "Anime desde Nyaa.si - Master Of Reality Edition",
     logo: orangeLogo,
@@ -30,25 +21,21 @@ const manifest = {
     behaviorHints: { configurable: true }
 };
 
-// RUTA 1: Inicio (HTML) - Forzamos lectura manual para evitar el error de "solo texto"
+// Master Of Reality: Forzamos el HTML para que no aparezca como texto plano
 app.get('/', (req, res) => {
-    const htmlPath = path.join(__dirname, 'index.html');
-    fs.readFile(htmlPath, 'utf8', (err, data) => {
-        if (err) return res.status(500).send("Error cargando index.html");
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.send(data);
-    });
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// RUTA 2: Manifests (JSON)
+// Rutas de Manifest
 app.get('/manifest.json', (req, res) => res.json(manifest));
 app.get('/:config/manifest.json', (req, res) => res.json(manifest));
 
-// RUTA 3: Streams (La lógica de búsqueda)
+// Ruta de Streams
 app.get('/:config/stream/:type/:id.json', async (req, res) => {
     const isSukebei = req.params.config.includes('sukebei=true');
     const { type, id } = req.params;
-    let queries = [];
+    let name = id;
 
     try {
         const cleanId = id.split(":")[0];
@@ -57,8 +44,7 @@ app.get('/:config/stream/:type/:id.json', async (req, res) => {
             : `https://kitsu.io/api/edge/anime/${cleanId.replace('kitsu:','')}`;
         
         const metaRes = await axios.get(metaUrl);
-        const name = id.startsWith("tt") ? metaRes.data.meta.name : metaRes.data.data.attributes.canonicalTitle;
-        queries.push(name);
+        name = id.startsWith("tt") ? metaRes.data.meta.name : metaRes.data.data.attributes.canonicalTitle;
         
         const results = isSukebei 
             ? await sukebei.search(name, 10, { category: '0_0' })
@@ -80,8 +66,8 @@ app.get('/:config/stream/:type/:id.json', async (req, res) => {
     }
 });
 
-// Ruta de respaldo para streams sin config
+// Redirección para llamadas sin config
 app.get('/stream/:type/:id.json', (req, res) => res.redirect(`/sukebei=false${req.url}`));
 
 const port = process.env.PORT || 10000;
-app.listen(port, '0.0.0.0', () => console.log('🚀 Nyaa Online v1.5.6'));
+app.listen(port, '0.0.0.0', () => console.log('🚀 Nyaa v1.5.7 Online'));
