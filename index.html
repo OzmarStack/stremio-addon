@@ -4,69 +4,42 @@
     <meta charset="UTF-8">
     <title>Configuración OzmarStack</title>
     <style>
-        body { 
-            background: #121212; 
-            color: white; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            padding-top: 50px; 
-            margin: 0;
-        }
-        .box { 
-            border: 2px solid #ffa500; 
-            display: inline-block; 
-            padding: 40px; 
-            border-radius: 20px; 
-            background: #1e1e1e; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .logo-nami { 
-            width: 150px; 
+        body { background: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .box { border: 2px solid #ffa500; display: inline-block; padding: 40px; border-radius: 20px; background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* Contenedor de la imagen */
+        .nami-img {
+            width: 150px;
             height: 150px;
-            border-radius: 50%; 
-            border: 4px solid #ffa500; 
-            margin-bottom: 20px;
-            background-image: url('https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png');
+            border-radius: 50%;
+            border: 4px solid #ffa500;
+            margin: 0 auto 20px auto;
+            background-color: #333;
+            background-image: url('https://i.ibb.co/v44m8Ym/nami.png'); /* Enlace de respaldo */
             background-size: cover;
             background-position: center;
-            display: inline-block;
         }
-        /* Respaldo por si GitHub tarda en cargar */
-        .logo-nami:empty::after {
-            content: "🍊";
-            font-size: 80px;
-            line-height: 150px;
-        }
-        h1 { color: #ffa500; margin: 10px 0; }
-        button { 
-            background: #ffa500; 
-            color: #000;
-            border: none; 
-            padding: 15px 30px; 
-            font-weight: bold; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
+
+        h1 { color: #ffa500; margin: 10px 0; font-size: 24px; }
+        button { background: #ffa500; color: #000; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
         button:hover { background: #ffcc66; transform: scale(1.05); }
-        .opt { margin: 30px 0; font-size: 1.1rem; }
-        input[type="checkbox"] { transform: scale(1.5); margin-right: 10px; cursor: pointer; }
+        .opt { margin: 25px 0; font-size: 1.1rem; }
+        input[type="checkbox"] { transform: scale(1.4); margin-right: 10px; vertical-align: middle; }
     </style>
 </head>
 <body>
     <div class="box">
-        <div class="logo-nami"></div>
+        <div class="nami-img"></div>
         <h1>Nami Nyaa Addon</h1>
-        <p style="color: #aaa;">By OzmarStack</p>
+        <p style="color: #888;">Navegando los mares de OzmarStack</p>
         
         <div class="opt">
             <label style="cursor: pointer;">
-                <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei (Adultos)
+                <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei
             </label>
         </div>
         
-        <button onclick="install()">INSTALAR EN STREMIO</button>
+        <button onclick="install()">INSTALAR ADDON</button>
     </div>
 
     <script>
