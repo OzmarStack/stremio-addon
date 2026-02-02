@@ -14,38 +14,74 @@
         }
         .box { 
             background: #1a1a1a; 
-            border: 2px solid #ffa500; 
-            padding: 40px; border-radius: 20px; 
-            text-align: center; width: 320px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255, 165, 0, 0.4); 
+            padding: 40px; border-radius: 25px; 
+            text-align: center; width: 340px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 15px rgba(255, 165, 0, 0.1);
         }
         .logo-circle {
-            width: 100px; height: 100px;
-            border-radius: 50%; border: 3px solid #ffa500;
-            margin: 0 auto 20px;
-            background: #333;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 50px;
+            width: 110px; height: 110px;
+            border-radius: 50%; 
+            border: 3px solid #ffa500;
+            margin: 0 auto 25px;
+            background-color: #222;
+            /* Brillo Naranja (Glow) */
+            box-shadow: 0 0 25px #ffa500, inset 0 0 15px rgba(255, 165, 0, 0.4);
+            /* Imagen integrada en Base64 */
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC");
+            background-size: 65%;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform 0.3s ease;
         }
-        h1 { color: #ffa500; font-size: 22px; margin: 10px 0; }
-        .opt { background: #222; padding: 15px; border-radius: 10px; margin: 20px 0; }
+        .logo-circle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px #ffa500;
+        }
+        h1 { 
+            color: #ffa500; 
+            font-size: 26px; 
+            margin: 10px 0; 
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+        }
+        .opt { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 18px; 
+            border-radius: 12px; 
+            margin: 25px 0;
+            border: 1px solid rgba(255, 165, 0, 0.2);
+        }
         button { 
-            background: #ffa500; color: #000; border: none; 
-            padding: 15px; font-weight: bold; border-radius: 10px; 
-            cursor: pointer; width: 100%; font-size: 16px;
+            background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); 
+            color: #000; 
+            border: none; 
+            padding: 18px; 
+            font-weight: 800; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            width: 100%; 
+            font-size: 16px;
             text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
+            transition: all 0.2s ease;
         }
-        button:hover { background: #ffcc66; }
+        button:hover { 
+            background: #ffcc66; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.6);
+        }
     </style>
 </head>
 <body>
     <div class="box">
-        <div class="logo-circle">🍊</div>
+        <div class="logo-circle"></div>
         <h1>Nyaa Torrents</h1>
-        <p style="color: #888; font-size: 13px;">Configuración de Master Of Reality</p>
+        <p style="color: #888; font-size: 13px; margin-bottom: 5px;">Versión 1.4.1</p>
+        <p style="color: #bbb; font-size: 14px;">Configuración de Master Of Reality</p>
         <div class="opt">
-            <label style="cursor: pointer;">
-                <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei
+            <label style="cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <input type="checkbox" id="sukebei" checked style="width: 20px; height: 20px; margin-right: 10px; accent-color: #ffa500;"> 
+                Incluir contenido Sukebei
             </label>
         </div>
         <button onclick="install()">INSTALAR EN STREMIO</button>
