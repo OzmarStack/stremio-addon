@@ -11,13 +11,11 @@ app.use(express.static(__dirname));
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
-    version: "1.3.3", // <--- Sube la versión aquí
+    version: "1.3.4", // Subimos versión para forzar actualización en Stremio
     name: "Nami Nyaa Streams",
     description: "Anime directo de Nyaa.si - El tesoro de OzmarStack",
-    logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
-    // ... resto del código
-    // ESTA ES LA IMAGEN QUE APARECERÁ EN STREMIO
-   logo: "https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png",
+    // USAMOS EL LINK DE GITHUB DIRECTO (Asegúrate de tener el archivo logo.png en GitHub)
+    logo: "https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png",
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -126,5 +124,3 @@ app.get('/stream/:type/:id.json', (req, res) => {
 
 const port = process.env.PORT || 10000;
 app.listen(port, () => console.log(`🚀 Addon listo en puerto ${port}`));
-
-
