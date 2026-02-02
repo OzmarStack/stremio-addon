@@ -2,44 +2,115 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Configuración OzmarStack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración Nami Addon - OzmarStack</title>
     <style>
-        body { background: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        .box { border: 2px solid #ffa500; display: inline-block; padding: 40px; border-radius: 20px; background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        /* Contenedor de la imagen */
+        body { 
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            /* Fondo de One Piece */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.alphacoders.com/133/1331828.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .box { 
+            background: rgba(30, 30, 30, 0.85); /* Efecto cristal esmerilado */
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffa500; 
+            padding: 40px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+
         .nami-img {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             border: 4px solid #ffa500;
             margin: 0 auto 20px auto;
-            background-color: #333;
-            background-image: url('https://i.ibb.co/v44m8Ym/nami.png'); /* Enlace de respaldo */
+            background-color: #222;
+            /* Imagen de Nami */
+            background-image: url('https://i.postimg.cc/85yX8v8j/nami-logo.png');
             background-size: cover;
             background-position: center;
+            box-shadow: 0 0 20px rgba(254, 165, 0, 0.4);
         }
 
-        h1 { color: #ffa500; margin: 10px 0; font-size: 24px; }
-        button { background: #ffa500; color: #000; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
-        button:hover { background: #ffcc66; transform: scale(1.05); }
-        .opt { margin: 25px 0; font-size: 1.1rem; }
-        input[type="checkbox"] { transform: scale(1.4); margin-right: 10px; vertical-align: middle; }
+        h1 { 
+            color: #ffa500; 
+            margin: 10px 0; 
+            font-size: 26px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        p { color: #ddd; font-size: 14px; margin-bottom: 25px; }
+
+        .opt { 
+            margin: 25px 0; 
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 165, 0, 0.2);
+        }
+
+        label { cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+
+        input[type="checkbox"] { 
+            width: 20px; 
+            height: 20px; 
+            margin-right: 12px; 
+            cursor: pointer; 
+            accent-color: #ffa500;
+        }
+
+        button { 
+            background: #ffa500; 
+            color: #111; 
+            border: none; 
+            padding: 16px 32px; 
+            font-weight: 800; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+        }
+
+        button:hover { 
+            background: #ffcc66; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.5);
+        }
     </style>
 </head>
 <body>
     <div class="box">
         <div class="nami-img"></div>
         <h1>Nami Nyaa Addon</h1>
-        <p style="color: #888;">Navegando los mares de OzmarStack</p>
+        <p>Un proyecto de OzmarStack para los Nakamas</p>
         
         <div class="opt">
-            <label style="cursor: pointer;">
-                <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei
+            <label>
+                <input type="checkbox" id="sukebei" checked> 
+                <span>Incluir Sukebei (Adultos)</span>
             </label>
         </div>
         
-        <button onclick="install()">INSTALAR ADDON</button>
+        <button onclick="install()">INSTALAR EN STREMIO</button>
     </div>
 
     <script>
