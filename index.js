@@ -11,9 +11,11 @@ app.use(express.static(__dirname));
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
-    version: "1.3.2",
+    version: "1.3.3", // <--- Sube la versión aquí
     name: "Nami Nyaa Streams",
     description: "Anime directo de Nyaa.si - El tesoro de OzmarStack",
+    logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
+    // ... resto del código
     // ESTA ES LA IMAGEN QUE APARECERÁ EN STREMIO
     logo: "https://i.ibb.co/V99t9Yf/nami-wanokuni.png", 
     resources: ["stream"],
@@ -124,3 +126,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 
 const port = process.env.PORT || 10000;
 app.listen(port, () => console.log(`🚀 Addon listo en puerto ${port}`));
+
