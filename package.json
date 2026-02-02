@@ -4,7 +4,8 @@
   "description": "Addon de Stremio para Nyaa.si",
   "main": "addon.js",
   "scripts": {
-    "start": "node addon.js"
+    "start": "node index.js"
+  },
   },
   "dependencies": {
     "stremio-addon-sdk": "^1.2.0",
