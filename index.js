@@ -9,14 +9,15 @@ const app = express();
 app.use(cors()); 
 app.use(express.static(__dirname)); 
 
+// Master Of Reality: Hemos convertido el logo a Base64 para que sea infalible
+const orangeLogoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC";
+
 const manifest = {
-    // ID actualizado para forzar una instalación limpia
-    id: "org.masterofreality.nyaa.torrents", 
-    version: "1.4.0", 
+    id: "org.masterofreality.nyaa.torrents.v6", 
+    version: "1.4.1", 
     name: "Nyaa Torrents",
     description: "Anime desde Nyaa.si - By Master Of Reality",
-    // Logo de Naranja (Link de alta compatibilidad)
-    logo: "https://i.imgur.com/vH9T4Fm.png", 
+    logo: orangeLogoBase64, // La imagen ahora vive dentro del código
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -101,15 +102,9 @@ builder.defineStreamHandler(async (args) => {
     })};
 });
 
-// --- RUTAS DEL SERVIDOR ---
 const addonInterface = builder.getInterface();
-
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-app.get('/:config?/manifest.json', (req, res) => {
-    res.json(manifest);
-});
-
+app.get('/:config?/manifest.json', (req, res) => res.json(manifest));
 app.get('/:config/stream/:type/:id.json', (req, res) => {
     const config = req.params.config ? req.params.config.split(',').reduce((acc, curr) => {
         const [k, v] = curr.split('=');
@@ -118,10 +113,9 @@ app.get('/:config/stream/:type/:id.json', (req, res) => {
     }, {}) : {};
     addonInterface.handlers.stream({ type: req.params.type, id: req.params.id, config }).then(r => res.json(r));
 });
-
 app.get('/stream/:type/:id.json', (req, res) => {
     addonInterface.handlers.stream({ type: req.params.type, id: req.params.id }).then(r => res.json(r));
 });
 
 const port = process.env.PORT || 10000;
-app.listen(port, () => console.log(`🚀 Nyaa Torrents listo - Master Of Reality Edition`));
+app.listen(port, () => console.log(`🚀 Nyaa Torrents listo - Versión Base64`));
