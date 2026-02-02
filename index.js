@@ -1,28 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Nyaa Torrents - Master Of Reality</title>
-    <style>
-        body { margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; background: #0b0d17; color: white; }
-        .box { background: #1a1a1a; border: 2px solid #ffa500; padding: 40px; border-radius: 25px; text-align: center; width: 320px; box-shadow: 0 0 30px #ffa50055; }
-        .logo { width: 80px; height: 80px; background: #333; border-radius: 50%; margin: 0 auto 20px; border: 3px solid #ffa500; box-shadow: 0 0 20px #ffa500; display: flex; align-items: center; justify-content: center; font-size: 40px; }
-        h1 { color: #ffa500; }
-        button { background: #ffa500; border: none; padding: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <div class="logo">🍊</div>
-        <h1>Nyaa Torrents</h1>
-        <p>Master Of Reality Edition</p>
-        <button onclick="install()">INSTALAR EN STREMIO</button>
-    </div>
-    <script>
-        function install() {
-            const url = window.location.origin + "/manifest.json";
-            window.location.href = url.replace("https://", "stremio://").replace("http://", "stremio://");
-        }
-    </script>
-</body>
-</html>
+const express = require('express');
+const cors = require('cors');
+const { si } = require('nyaapi');
+const axios = require('axios');
+const path = require('path');
+const app = express();
+
+app.use(cors());
+
+// Master Of Reality: Forzamos el tipo de contenido JSON para todas las rutas del addon
+app.use((req, res, next) => {
+    if (req.url.includes('manifest.json') || req.url.includes('/stream/')) {
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    }
+    next();
+});
+
+const manifest = {
+    id: "com.masterofreality.nyaa.final.v30", 
+    version: "1.5.9",
+    name: "Nyaa Torrents 🍊",
+    description: "Anime desde Nyaa.si - Master Of Reality Edition",
+    resources: ["stream"],
+    types: ["anime", "series", "movie"],
+    idPrefixes: ["tt", "kitsu"]
+};
+
+// Página de configuración
+app.get('/', (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Ruta Manifest única y directa
+app.get('/manifest.json', (req, res) => res.json(manifest));
+
+// Ruta de Streams simplificada (sin parámetros de configuración opcionales)
+app.get('/stream/:type/:id.json', async (req, res) => {
+    const { type, id } = req.params;
+    let query = id;
+
+    try {
+        const cleanId = id.split(":")[0];
+        const metaUrl = id.startsWith("tt") 
+            ? `https://v3-cinemeta.strem.io/meta/${type}/${cleanId}.json`
+            : `https://kitsu.io/api/edge/anime/${cleanId.replace('kitsu:','')}`;
+        
+        const metaRes = await axios.get(metaUrl);
+        query = id.startsWith("tt") ? metaRes.data.meta.name : metaRes.data.data.attributes.canonicalTitle;
+        
+        const results = await si.search(query, 10, { category: '1_0' });
+        const streams = (results || []).map(torrent => {
+            const hashMatch = torrent.magnet.match(/xt=urn:btih:([a-zA-Z0-9]+)/);
+            if (!hashMatch) return null;
+            return {
+                name: "🍊 MASTER-NYAA",
+                title: `${torrent.name}\n👥 ${torrent.seeders} 💾 ${torrent.fileSize}`,
+                infoHash: hashMatch[1].toLowerCase()
+            };
+        }).filter(Boolean);
+
+        res.json({ streams });
+    } catch (e) {
+        res.json({ streams: [] });
+    }
+});
+
+const port = process.env.PORT || 10000;
+app.listen(port, '0.0.0.0', () => console.log('🚀 Addon Online'));
