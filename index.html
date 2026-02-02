@@ -2,31 +2,36 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyaa Torrents - Master Of Reality</title>
     <style>
-        body { margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; background: #0b0d17; color: white; }
-        .box { background: #1a1a1a; border: 1px solid #ffa500; padding: 40px; border-radius: 25px; text-align: center; width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ffa500; margin: 0 auto 20px; background-color: #222; box-shadow: 0 0 20px #ffa500; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC"); background-size: 60%; background-repeat: no-repeat; background-position: center; }
-        h1 { color: #ffa500; font-size: 24px; }
-        .opt { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin: 20px 0; }
-        button { background: #ffa500; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; font-size: 16px; text-transform: uppercase; }
+        body { margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', sans-serif; background: #0b0d17; color: white; }
+        .box { background: #1a1a1a; border: 1px solid #ffa500; padding: 40px; border-radius: 25px; text-align: center; width: 320px; box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(255,165,0,0.2); }
+        .logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ffa500; margin: 0 auto 20px; background-color: #222; box-shadow: 0 0 25px #ffa500; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC"); background-size: 60%; background-repeat: no-repeat; background-position: center; }
+        h1 { color: #ffa500; font-size: 24px; margin-bottom: 10px; }
+        .opt { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid rgba(255,165,0,0.2); }
+        button { background: linear-gradient(135deg, #ffa500, #ff8c00); color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; font-size: 16px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(255,165,0,0.3); }
+        button:hover { background: #ffcc66; transform: translateY(-1px); }
     </style>
 </head>
 <body>
     <div class="box">
         <div class="logo"></div>
         <h1>Nyaa Torrents</h1>
-        <p>Master Of Reality Edition</p>
+        <p style="font-size: 14px; color: #aaa;">Master Of Reality Edition</p>
         <div class="opt">
-            <label style="cursor: pointer;"><input type="checkbox" id="skb" checked> Incluir Sukebei</label>
+            <label style="cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <input type="checkbox" id="skb" checked style="margin-right: 10px; accent-color: #ffa500;"> Incluir Sukebei
+            </label>
         </div>
-        <button onclick="install()">INSTALAR</button>
+        <button onclick="install()">INSTALAR EN STREMIO</button>
     </div>
     <script>
         function install() {
-            const config = "sukebei=" + document.getElementById('skb').checked;
-            const url = window.location.origin + "/" + config + "/manifest.json";
-            window.location.href = url.replace("https://", "stremio://").replace("http://", "stremio://");
+            const isSukebei = document.getElementById('skb').checked ? "sukebei=true" : "sukebei=false";
+            const manifestUrl = window.location.origin + "/" + isSukebei + "/manifest.json";
+            const stremioUrl = manifestUrl.replace(/^https?:\/\//, "stremio://");
+            window.location.href = stremioUrl;
         }
     </script>
 </body>
