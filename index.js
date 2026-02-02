@@ -4,15 +4,14 @@ const axios = require('axios');
 
 // --- CONFIGURACIÓN DEL ADDON ---
 const manifest = {
-    id: 'community.nyaa.ultimate',
-    version: '1.1.0',
-    name: 'Nyaa & Sukebei Ultimate',
-    description: 'Buscador universal (Nyaa + Sukebei) compatible con IMDB y Kitsu.',
-    // Avisamos a Stremio que soportamos ambos tipos de IDs
-    idPrefixes: ['tt', 'kitsu'], 
-    resources: ['stream'],
-    types: ['movie', 'series', 'anime'],
-    catalogs: []
+    id: "org.ozmar.nyaa.nami", // Cambiamos el ID para que Stremio lo vea como nuevo
+    version: "1.1.0",
+    name: "Nami Nyaa Streams", // Un nombre que lo diferencie de Torrentio
+    description: "Anime directo de Nyaa.si - El tesoro de Ozmar",
+    logo: "",
+    resources: ["stream"],
+    types: ["anime", "series"],
+    idPrefixes: ["tt", "kitsu"]
 };
 
 const builder = new addonBuilder(manifest);
@@ -163,10 +162,13 @@ builder.defineStreamHandler(async ({ type, id }) => {
     });
 
     console.log(`✅ Encontrados: ${finalStreams.length}`);
-    return { streams: finalStreams };
-});
-
+    return items.map(item => ({
+    name: "🍊 Nami Nyaa\n" + (item.quality || "HD"), // Aparecerá en el botón de selección
+    title: item.title,
+    infoHash: item.infoHash
+}));
 // --- INICIO DEL SERVIDOR (CRUCIAL PARA RENDER) ---
 const port = process.env.PORT || 7000;
 serveHTTP(builder.getInterface(), { port: port });
 console.log(`🚀 Addon activo en puerto: ${port}`);
+
