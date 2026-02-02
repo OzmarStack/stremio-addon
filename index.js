@@ -2,13 +2,16 @@ const { addonBuilder } = require('stremio-addon-sdk');
 const { si, sukebei } = require('nyaapi');
 const axios = require('axios');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const app = express();
-app.use(express.static(__dirname)); // <--- ¡ESTA LÍNEA ES EL MAPA DEL TESORO!
+
+app.use(cors()); // Soluciona el error 'Failed to fetch'
+app.use(express.static(__dirname)); // Permite cargar tus imágenes locales
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
-    version: "1.3.1",
+    version: "1.3.2",
     name: "Nami Nyaa Streams",
     description: "Anime directo de Nyaa.si - El tesoro de Ozmar",
     logo: "https://i.postimg.cc/85yX8v8j/nami-logo.png",
@@ -55,7 +58,7 @@ async function generateQueries(type, id) {
                 }
             });
         }
-    } catch (e) { console.log("Meta Error"); }
+    } catch (e) { console.log("Error de metadatos"); }
     return [...new Set(queries)];
 }
 
@@ -96,16 +99,15 @@ builder.defineStreamHandler(async (args) => {
     })};
 });
 
-// --- SERVIDOR EXPRESS (Página de Configuración + Addon) ---
+// --- RUTAS DEL SERVIDOR ---
 const addonInterface = builder.getInterface();
 
-// Sirve la página de configuración
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
-// Sirve el manifest (con o sin config)
-app.get('/:config?/manifest.json', (req, res) => res.json(manifest));
+app.get('/:config?/manifest.json', (req, res) => {
+    res.json(manifest);
+});
 
-// Sirve los streams
 app.get('/:config/stream/:type/:id.json', (req, res) => {
     const config = req.params.config.split(',').reduce((acc, curr) => {
         const [k, v] = curr.split('=');
@@ -115,11 +117,9 @@ app.get('/:config/stream/:type/:id.json', (req, res) => {
     addonInterface.handlers.stream({ type: req.params.type, id: req.params.id, config }).then(r => res.json(r));
 });
 
-// Fallback para cuando no hay config en la URL
 app.get('/stream/:type/:id.json', (req, res) => {
     addonInterface.handlers.stream({ type: req.params.type, id: req.params.id }).then(r => res.json(r));
 });
 
-const port = process.env.PORT || 7000;
-app.listen(port, () => console.log(`🚀 Nami Addon listo en puerto ${port}`));
-
+const port = process.env.PORT || 10000;
+app.listen(port, () => console.log(`🚀 OzmarStack listo en puerto ${port}`));
