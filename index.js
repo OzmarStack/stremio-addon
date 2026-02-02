@@ -4,6 +4,7 @@ const axios = require('axios');
 const express = require('express');
 const path = require('path');
 const app = express();
+app.use(express.static(__dirname)); // <--- ¡ESTA LÍNEA ES EL MAPA DEL TESORO!
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
@@ -121,3 +122,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 
 const port = process.env.PORT || 7000;
 app.listen(port, () => console.log(`🚀 Nami Addon listo en puerto ${port}`));
+
