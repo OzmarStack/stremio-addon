@@ -3,36 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nami & Robin Addon - OzmarStack</title>
+    <title>Nyaa Torrents - Master Of Reality</title>
     <style>
         body { 
             margin: 0; padding: 0; height: 100vh; 
             display: flex; justify-content: center; align-items: center; 
-            font-family: sans-serif; background: #0b0d17; color: white;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0b0d17;
+            color: white;
         }
         .box { 
-            background: #1a1a1a; border: 2px solid #ffa500; 
-            padding: 40px; border-radius: 20px; text-align: center; width: 320px;
+            background: #1a1a1a; 
+            border: 2px solid #ffa500; 
+            padding: 40px; border-radius: 20px; 
+            text-align: center; width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
-        .nami-logo {
-            width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ffa500;
-            margin: 0 auto 20px; background: #333; font-size: 50px;
+        .logo-circle {
+            width: 100px; height: 100px;
+            border-radius: 50%; border: 3px solid #ffa500;
+            margin: 0 auto 20px;
+            background: #333;
             display: flex; align-items: center; justify-content: center;
+            font-size: 50px;
         }
-        h1 { color: #ffa500; font-size: 22px; }
+        h1 { color: #ffa500; font-size: 22px; margin: 10px 0; }
+        .opt { background: #222; padding: 15px; border-radius: 10px; margin: 20px 0; }
         button { 
-            background: #ffa500; color: #000; border: none; padding: 15px; 
-            font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%;
+            background: #ffa500; color: #000; border: none; 
+            padding: 15px; font-weight: bold; border-radius: 10px; 
+            cursor: pointer; width: 100%; font-size: 16px;
+            text-transform: uppercase;
         }
+        button:hover { background: #ffcc66; }
     </style>
 </head>
 <body>
     <div class="box">
-        <div class="nami-logo">🍊</div>
-        <h1>Nami & Robin Addon</h1>
-        <p style="color: #888; font-size: 13px;">Configuración de OzmarStack</p>
-        <div style="margin: 20px 0;">
-            <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei
+        <div class="logo-circle">🍊</div>
+        <h1>Nyaa Torrents</h1>
+        <p style="color: #888; font-size: 13px;">Configuración de Master Of Reality</p>
+        <div class="opt">
+            <label style="cursor: pointer;">
+                <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei
+            </label>
         </div>
         <button onclick="install()">INSTALAR EN STREMIO</button>
     </div>
@@ -41,7 +55,8 @@
             const skb = document.getElementById('sukebei').checked;
             const config = "sukebei=" + skb;
             const manifestUrl = window.location.origin + "/" + config + "/manifest.json";
-            window.location.href = manifestUrl.replace(/^https?:\/\//, "stremio://");
+            const stremioUrl = manifestUrl.replace(/^https?:\/\//, "stremio://");
+            window.location.href = stremioUrl;
         }
     </script>
 </body>
