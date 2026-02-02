@@ -45,7 +45,11 @@ async function searchNyaa(query, isSukebei) {
     } catch (e) { return []; }
 }
 
-app.get('/manifest.json', (req, res) => res.json(manifest));
+// Master Of Reality: Forzamos el tipo 'text/html' para que no aparezca solo texto plano
+app.get('/', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.get('/:config/manifest.json', (req, res) => res.json(manifest));
 app.get('/:config?/stream/:type/:id.json', async (req, res) => {
     const isSukebei = req.params.config && req.params.config.includes('sukebei=true');
@@ -67,3 +71,4 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 const port = process.env.PORT || 10000;
 app.listen(port, '0.0.0.0', () => console.log('🚀 Nyaa Torrents v1.5.4 Online'));
+
