@@ -1,18 +1,14 @@
 {
-  "name": "stremio-nyaa",
+  "name": "stremio-nyaa-addon",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Addon de Stremio para Nyaa.si",
+  "main": "addon.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node addon.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "axios": "^1.13.4",
-    "nyaapi": "^2.4.4",
-    "stremio-addon-sdk": "^1.6.10"
+    "stremio-addon-sdk": "^3.0.0",
+    "node-fetch": "^2.6.7",
+    "xml2js": "^0.4.23"
   }
 }
