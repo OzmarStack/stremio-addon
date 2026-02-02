@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración Nami Addon - OzmarStack</title>
+    <title>Nami & Robin Addon - OzmarStack</title>
     <style>
         body { 
             margin: 0;
@@ -12,81 +12,105 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: sans-serif;
-            /* Fondo de respaldo sólido + Imagen de alta disponibilidad */
-            background: #0b0d17;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                              url('https://images2.alphacoders.com/516/516664.jpg');
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            /* Fondo épico de Nami y Robin */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images7.alphacoders.com/132/1327177.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
         }
 
         .box { 
-            background: rgba(20, 20, 20, 0.9);
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
             border: 2px solid #ffa500; 
             padding: 40px; 
-            border-radius: 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             text-align: center;
-            max-width: 350px;
-            width: 85%;
-            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            max-width: 380px;
+            width: 90%;
         }
 
-        .nami-img {
-            width: 130px;
-            height: 130px;
+        .profile-img {
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 3px solid #ffa500;
+            border: 4px solid #ffa500;
             margin: 0 auto 20px auto;
-            /* Imagen de Nami desde un CDN muy estable */
-            background-color: #333;
+            background-color: #222;
+            /* Imagen central de Nami */
             background-image: url('https://avatarfiles.alphacoders.com/374/374665.png');
             background-size: cover;
             background-position: center;
+            box-shadow: 0 0 25px rgba(255, 165, 0, 0.5);
         }
 
-        h1 { color: #ffa500; margin: 10px 0; font-size: 24px; }
-        p { color: #ccc; font-size: 14px; }
+        h1 { 
+            color: #ffa500; 
+            margin: 10px 0; 
+            font-size: 28px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        p { color: #eee; font-size: 15px; margin-bottom: 25px; font-weight: 300; }
 
         .opt { 
             margin: 25px 0; 
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 165, 0, 0.3);
         }
 
-        input[type="checkbox"] { transform: scale(1.3); margin-right: 10px; accent-color: #ffa500; }
+        label { cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+
+        input[type="checkbox"] { 
+            width: 22px; 
+            height: 22px; 
+            margin-right: 12px; 
+            cursor: pointer; 
+            accent-color: #ffa500;
+        }
 
         button { 
             background: #ffa500; 
             color: #000; 
             border: none; 
-            padding: 15px; 
-            font-weight: bold; 
-            border-radius: 10px; 
+            padding: 16px 32px; 
+            font-weight: 800; 
+            border-radius: 12px; 
             cursor: pointer; 
+            font-size: 16px; 
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
-            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
         }
 
-        button:hover { background: #ffcc66; }
+        button:hover { 
+            background: #ffcc66; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(255, 165, 0, 0.6);
+        }
     </style>
 </head>
 <body>
     <div class="box">
-        <div class="nami-img"></div>
-        <h1>Nami Nyaa Addon</h1>
-        <p>Configuración de OzmarStack</p>
+        <div class="profile-img"></div>
+        <h1>Nami & Robin Addon</h1>
+        <p>Configuración exclusiva de OzmarStack</p>
         
         <div class="opt">
-            <label style="cursor: pointer;">
+            <label>
                 <input type="checkbox" id="sukebei" checked> 
-                Incluir Sukebei (H)
+                <span>Activar contenido Sukebei</span>
             </label>
         </div>
         
-        <button onclick="install()">INSTALAR EN STREMIO</button>
+        <button onclick="install()">Instalar Tesoro</button>
     </div>
 
     <script>
