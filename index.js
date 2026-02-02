@@ -27,7 +27,6 @@ const manifest = {
 };
 
 async function searchNyaa(query, isSukebei) {
-    console.log(`🔍 Buscando: ${query}`);
     try {
         const results = isSukebei 
             ? await sukebei.search(query, 12, { category: '0_0' })
@@ -36,53 +35,34 @@ async function searchNyaa(query, isSukebei) {
         return (results || []).map(torrent => {
             const hashMatch = torrent.magnet.match(/xt=urn:btih:([a-zA-Z0-9]+)/);
             if (!hashMatch) return null;
-            
-            let quality = "HD";
-            if (torrent.name.includes('1080')) quality = "1080p";
-            else if (torrent.name.includes('720')) quality = "720p";
-
+            let quality = torrent.name.includes('1080') ? '1080p' : (torrent.name.includes('720') ? '720p' : 'HD');
             return {
                 name: `⭐ MASTER-NYAA\n${quality}`,
                 title: `${torrent.name}\n👥 ${torrent.seeders} 💾 ${torrent.fileSize}`,
                 infoHash: hashMatch[1].toLowerCase()
             };
         }).filter(Boolean);
-    } catch (e) { 
-        return []; 
-    }
+    } catch (e) { return []; }
 }
 
 app.get('/manifest.json', (req, res) => res.json(manifest));
 app.get('/:config/manifest.json', (req, res) => res.json(manifest));
-
 app.get('/:config?/stream/:type/:id.json', async (req, res) => {
     const isSukebei = req.params.config && req.params.config.includes('sukebei=true');
     const { type, id } = req.params;
     let queries = [];
-
     try {
         const cleanId = id.split(":")[0];
         const metaUrl = id.startsWith("tt") 
             ? `https://v3-cinemeta.strem.io/meta/${type}/${cleanId}.json`
             : `https://kitsu.io/api/edge/anime/${cleanId.replace('kitsu:','')}`;
-        
         const metaRes = await axios.get(metaUrl);
-        
-        if (id.startsWith("tt")) {
-            queries.push(metaRes.data.meta.name);
-        } else {
-            const attr = metaRes.data.data.attributes;
-            queries.push(attr.canonicalTitle);
-            if (attr.titles.en) queries.push(attr.titles.en);
-        }
+        if (id.startsWith("tt")) queries.push(metaRes.data.meta.name);
+        else queries.push(metaRes.data.data.attributes.canonicalTitle);
     } catch (e) { queries.push(id); }
-
     const allResults = await Promise.all(queries.map(q => searchNyaa(q, isSukebei)));
-    const streams = [].concat(...allResults);
-
-    res.json({ streams });
+    res.json({ streams: [].concat(...allResults) });
 });
-
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 const port = process.env.PORT || 10000;
