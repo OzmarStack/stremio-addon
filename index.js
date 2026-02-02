@@ -1,3 +1,4 @@
+// Master Of Reality Edition - Nyaa Torrents v1.5.4
 const express = require('express');
 const cors = require('cors');
 const { si, sukebei } = require('nyaapi');
@@ -26,11 +27,11 @@ const manifest = {
 };
 
 async function searchNyaa(query, isSukebei) {
-    console.log(`🔍 Buscando en Nyaa: ${query}`);
+    console.log(`🔍 Buscando: ${query}`);
     try {
         const results = isSukebei 
-            ? await sukebei.search(query, 15, { category: '0_0' })
-            : await si.search(query, 15, { category: '1_0' });
+            ? await sukebei.search(query, 12, { category: '0_0' })
+            : await si.search(query, 12, { category: '1_0' });
         
         return (results || []).map(torrent => {
             const hashMatch = torrent.magnet.match(/xt=urn:btih:([a-zA-Z0-9]+)/);
@@ -47,7 +48,6 @@ async function searchNyaa(query, isSukebei) {
             };
         }).filter(Boolean);
     } catch (e) { 
-        console.log("❌ Error API:", e.message);
         return []; 
     }
 }
