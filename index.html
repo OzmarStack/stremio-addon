@@ -1,66 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Configuración Nami Nyaa - OzmarStack</title>
+    <title>Configuración OzmarStack</title>
     <style>
-        body {
-            background: #1a1a1a;
-            color: #f2f2f2;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #2a2a2a;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            border: 2px solid #ffa500;
-            max-width: 400px;
-        }
-        img { width: 120px; border-radius: 50%; border: 3px solid #ffa500; }
-        h1 { color: #ffa500; margin-top: 15px; }
-        .option { margin: 20px 0; font-size: 18px; }
-        button {
-            background: #ffa500;
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover { background: #ffcc66; transform: scale(1.05); }
+        body { background: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .box { border: 2px solid #ffa500; display: inline-block; padding: 40px; border-radius: 20px; background: #1e1e1e; }
+        img { width: 150px; border-radius: 50%; border: 4px solid #ffa500; margin-bottom: 20px; }
+        button { background: #ffa500; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.2rem; }
+        .opt { margin-bottom: 30px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://i.imgur.com/8N4N3uW.png" alt="Nami">
-        <h1>OzmarStack</h1>
-        <p>Configura tu Addon de Nami</p>
-        
-        <div class="option">
-            <input type="checkbox" id="sukebei" checked> 
-            <label for="sukebei">Incluir resultados Sukebei</label>
+    <div class="box">
+        <img src="https://i.postimg.cc/85yX8v8j/nami-logo.png" alt="Nami">
+        <h1>Nami Nyaa Addon</h1>
+        <div class="opt">
+            <input type="checkbox" id="sukebei" checked> Incluir contenido Sukebei (Adultos)
         </div>
-
-        <button onclick="install()">INSTALAR EN STREMIO</button>
+        <button onclick="install()">INSTALAR ADDON</button>
     </div>
-
     <script>
         function install() {
-            const sukebei = document.getElementById('sukebei').checked;
-            const config = "sukebei=" + sukebei;
-            // Redirige al protocolo de Stremio con la configuración inyectada
-            const manifestUrl = window.location.origin + "/" + config + "/manifest.json";
-            window.location.href = "stremio://" + manifestUrl.replace("https://", "").replace("http://", "");
+            const skb = document.getElementById('sukebei').checked;
+            const config = "sukebei=" + skb;
+            const url = window.location.host + "/" + config + "/manifest.json";
+            window.location.href = "stremio://" + url;
         }
     </script>
 </body>
