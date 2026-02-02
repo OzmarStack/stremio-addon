@@ -11,8 +11,8 @@ app.use(express.static(__dirname));
 const orangeLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC";
 
 const manifest = {
-    id: "org.masterofreality.nyaa.final.v8",
-    version: "1.4.4",
+    id: "org.masterofreality.nyaa.fixed.v10", // ID nuevo para evitar el caché
+    version: "1.4.5",
     name: "Nyaa Torrents 🍊",
     description: "Anime desde Nyaa.si - Master Of Reality Edition",
     logo: orangeLogo,
@@ -22,7 +22,7 @@ const manifest = {
     behaviorHints: { configurable: true }
 };
 
-// Función de búsqueda optimizada para Nyaa
+// Función de búsqueda
 async function searchNyaa(query, isSukebei) {
     try {
         const results = isSukebei 
@@ -30,28 +30,32 @@ async function searchNyaa(query, isSukebei) {
             : await si.search(query, 12, { category: '1_0' });
         
         return (results || []).map(torrent => {
-            const hash = torrent.magnet.match(/xt=urn:btih:([a-zA-Z0-9]+)/)[1].toLowerCase();
+            const hashMatch = torrent.magnet.match(/xt=urn:btih:([a-zA-Z0-9]+)/);
+            const hash = hashMatch ? hashMatch[1].toLowerCase() : null;
+            if (!hash) return null;
+
             const quality = torrent.name.includes('1080') ? '1080p' : (torrent.name.includes('720') ? '720p' : 'HD');
             return {
                 name: `🍊 NYAA\n${quality}`,
                 title: `${torrent.name}\n👥 ${torrent.seeders} 💾 ${torrent.fileSize}`,
                 infoHash: hash
             };
-        });
+        }).filter(Boolean);
     } catch (e) { return []; }
 }
 
-// RUTA CRÍTICA: Manifest
+// --- RUTAS CORREGIDAS ---
+
+// Esta ruta acepta tanto /manifest.json como /sukebei=true/manifest.json
 app.get('/:config?/manifest.json', (req, res) => {
     res.json(manifest);
 });
 
-// RUTA CRÍTICA: Stream
+// Esta ruta maneja las peticiones de streams
 app.get('/:config?/stream/:type/:id.json', async (req, res) => {
     const { type, id, config } = req.params;
     const isSukebei = config && config.includes('sukebei=true');
     
-    // Obtener nombre del contenido
     let query = id;
     try {
         const cleanId = id.split(":")[0];
