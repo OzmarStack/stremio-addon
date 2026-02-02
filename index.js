@@ -10,13 +10,12 @@ app.use(cors());
 app.use(express.static(__dirname)); 
 
 const manifest = {
-    // CAMBIAMOS EL ID para forzar a Stremio a olvidar la versión anterior
-    id: "org.ozmar.nami.streams.v2", 
-    version: "1.3.6", 
-    name: "Nami & Robin Addon",
-    description: "Anime desde Nyaa.si - OzmarStack Edition",
-    // Logo de Nami (Enlace directo ultra-compatible)
-    logo: "https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png",
+    id: "org.ozmar.nami.orange.v3", // Nuevo ID para forzar limpieza total
+    version: "1.3.7", 
+    name: "Nami & Robin Addon 🍊",
+    description: "Anime desde Nyaa.si - El tesoro de OzmarStack",
+    // Usamos el emoji directamente; Stremio lo interpretará como ícono
+    logo: "🍊", 
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -124,4 +123,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 });
 
 const port = process.env.PORT || 10000;
-app.listen(port, () => console.log(`🚀 OzmarStack Nami v1.3.6 listo`));
+app.listen(port, () => console.log(`🚀 OzmarStack Nami 🍊 v1.3.7 listo`));
