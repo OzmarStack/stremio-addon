@@ -1,6 +1,6 @@
 {
   "name": "nyaa-torrents",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Nyaa Addon by Master Of Reality",
   "main": "index.js",
   "scripts": {
