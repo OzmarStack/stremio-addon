@@ -10,13 +10,13 @@ app.use(cors());
 app.use(express.static(__dirname)); 
 
 const manifest = {
-    // Nuevo ID para que Stremio limpie la configuración anterior
-    id: "org.ozmar.nami.orange.v4", 
-    version: "1.3.8", 
-    name: "Nami & Robin Addon 🍊",
-    description: "Anime desde Nyaa.si - El tesoro de OzmarStack",
-    // Link directo a icono de naranja (Alta compatibilidad)
-    logo: "https://i.ibb.co/3Yf6v88/orange-icon.png", 
+    // ID actualizado para forzar una instalación limpia
+    id: "org.masterofreality.nyaa.torrents", 
+    version: "1.4.0", 
+    name: "Nyaa Torrents",
+    description: "Anime desde Nyaa.si - By Master Of Reality",
+    // Logo de Naranja (Link de alta compatibilidad)
+    logo: "https://i.imgur.com/vH9T4Fm.png", 
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -77,7 +77,7 @@ builder.defineStreamHandler(async (args) => {
             if (infoHash && !allStreams.has(infoHash)) {
                 const q = torrent.name.includes('1080') ? '1080p' : (torrent.name.includes('720') ? '720p' : 'HD');
                 allStreams.set(infoHash, {
-                    name: `🍊 Nami\n${q}`, 
+                    name: `🍊 Nyaa\n${q}`, 
                     title: `[${sourceName}] ${torrent.name}\n👥 ${torrent.seeders || 0} 💾 ${torrent.fileSize || ''}`,
                     infoHash: infoHash
                 });
@@ -124,4 +124,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 });
 
 const port = process.env.PORT || 10000;
-app.listen(port, () => console.log(`🚀 OzmarStack Nami 🍊 v1.3.8 listo`));
+app.listen(port, () => console.log(`🚀 Nyaa Torrents listo - Master Of Reality Edition`));
