@@ -9,15 +9,14 @@ const app = express();
 app.use(cors()); 
 app.use(express.static(__dirname)); 
 
-// Master Of Reality: Hemos convertido el logo a Base64 para que sea infalible
-const orangeLogoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC";
+const orangeLogoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAAB4YyS8AAAASFBMVEUAAAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD/pAD7pU9DAAAAGHRSTlMAECBAUGBwgICAkJCgoLDAwMDQ0NDg4PD89mS3AAAAhUlEQVRo3u3ZSQ6EMAwFURNmS0ggof9tByS0pE676id9S6v8S5Ysc8SOn9v7uH0+T230Xvffp3beT2v0nvvXU7v0P6Xv1777f+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77X+77f+77X+77f+77/wf8A3S9E3S9L7TfAAAAAElFTkSuQmCC";
 
 const manifest = {
-    id: "org.masterofreality.nyaa.torrents.v6", 
-    version: "1.4.1", 
+    id: "org.masterofreality.nyaa.torrents.v7", 
+    version: "1.4.2", 
     name: "Nyaa Torrents",
     description: "Anime desde Nyaa.si - By Master Of Reality",
-    logo: orangeLogoBase64, // La imagen ahora vive dentro del código
+    logo: orangeLogoBase64,
     resources: ["stream"],
     types: ["anime", "series"],
     idPrefixes: ["tt", "kitsu"],
@@ -30,7 +29,6 @@ const manifest = {
 
 const builder = new addonBuilder(manifest);
 
-// --- LÓGICA DE BÚSQUEDA ---
 async function generateQueries(type, id) {
     let queries = [];
     const cleanId = id.split(":")[0];
@@ -77,10 +75,14 @@ builder.defineStreamHandler(async (args) => {
             const infoHash = hashMatch ? hashMatch[1].toLowerCase() : null;
             if (infoHash && !allStreams.has(infoHash)) {
                 const q = torrent.name.includes('1080') ? '1080p' : (torrent.name.includes('720') ? '720p' : 'HD');
+                
+                // CAMBIO CLAVE: Nombre de la fuente más exclusivo para que no se mezcle
                 allStreams.set(infoHash, {
-                    name: `🍊 Nyaa\n${q}`, 
+                    name: `🍊 NYAA-RE\n${q}`, 
                     title: `[${sourceName}] ${torrent.name}\n👥 ${torrent.seeders || 0} 💾 ${torrent.fileSize || ''}`,
-                    infoHash: infoHash
+                    infoHash: infoHash,
+                    // Agregamos una etiqueta para Master Of Reality
+                    tag: ["Nyaa", "MasterOfReality"] 
                 });
             }
         });
@@ -118,4 +120,4 @@ app.get('/stream/:type/:id.json', (req, res) => {
 });
 
 const port = process.env.PORT || 10000;
-app.listen(port, () => console.log(`🚀 Nyaa Torrents listo - Versión Base64`));
+app.listen(port, () => console.log(`🚀 Nyaa Torrents 1.4.2 listo`));
