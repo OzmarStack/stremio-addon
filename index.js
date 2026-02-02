@@ -11,10 +11,9 @@ app.use(express.static(__dirname));
 
 const manifest = {
     id: "org.ozmar.nyaa.nami",
-    version: "1.3.4", // Subimos versión para forzar actualización en Stremio
+    version: "1.3.4", 
     name: "Nami Nyaa Streams",
     description: "Anime directo de Nyaa.si - El tesoro de OzmarStack",
-    // USAMOS EL LINK DE GITHUB DIRECTO (Asegúrate de tener el archivo logo.png en GitHub)
     logo: "https://raw.githubusercontent.com/OzmarStack/stremio-addon/main/logo.png",
     resources: ["stream"],
     types: ["anime", "series"],
